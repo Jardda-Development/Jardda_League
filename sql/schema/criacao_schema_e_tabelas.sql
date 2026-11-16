@@ -95,7 +95,7 @@ CREATE TABLE jardda_league.clube_tecnico(
 	inicio_contrato_tecnico DATE NOT NULL CHECK(inicio_contrato_tecnico >= '1900-01-01' AND inicio_contrato_tecnico <= CURRENT_DATE),
 	previsao_contrato_tecnico DATE NOT NULL CHECK(previsao_contrato_tecnico >= inicio_contrato_tecnico AND previsao_contrato_tecnico <= inicio_contrato_tecnico + INTERVAL '10 YEARS' ),
 	termino_contrato_tecnico DATE CHECK(termino_contrato_tecnico > inicio_contrato_tecnico AND termino_contrato_tecnico <= CURRENT_DATE),
-	valor_salario_tecnico NUMERIC(8, 2) NOT NULL CHECK(valor_salario_tecnico >= 0), -- valor anual em dólares $
+	valor_salario_tecnico NUMERIC(10, 2) NOT NULL CHECK(valor_salario_tecnico >= 0), -- valor anual em dólares $
 	versao BIGINT NOT NULL DEFAULT 0,
 	CONSTRAINT fk_clube_id FOREIGN KEY (clube_id) REFERENCES jardda_league.clube(clube_id),
 	CONSTRAINT fk_tecnico_id FOREIGN KEY (tecnico_id) REFERENCES jardda_league.tecnico(tecnico_id)
