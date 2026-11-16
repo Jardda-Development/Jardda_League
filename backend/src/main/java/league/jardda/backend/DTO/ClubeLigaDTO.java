@@ -1,4 +1,4 @@
-package league.jardda.backend.dataTransferObj;
+package league.jardda.backend.DTO;
 
 import java.time.LocalDate;
 

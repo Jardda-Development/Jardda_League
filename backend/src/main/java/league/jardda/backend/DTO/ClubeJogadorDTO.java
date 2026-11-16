@@ -1,14 +1,14 @@
-package league.jardda.backend.dataTransferObj;
+package league.jardda.backend.DTO;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public record ClubeTecnicoDTO(
+public record ClubeJogadorDTO(
         Long id,
+        Long jogadorId,
+        String jogadorNome,
         Long clubeId,
         String clubeNome,
-        Long tecnicoId,
-        String tecnicoNome,
         LocalDate inicioContrato,
         LocalDate previsaoTermino,
         LocalDate terminoContrato,

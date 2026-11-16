@@ -1,10 +1,12 @@
 package league.jardda.backend.controller;
 
-import league.jardda.backend.dataTransferObj.ClubeJogadorDTO;
-import league.jardda.backend.dataTransferObj.JogadorDTO;
+import league.jardda.backend.DTO.ClubeJogadorDTO;
+import league.jardda.backend.DTO.JogadorDTO;
+import league.jardda.backend.DTO.PageResponse;
 import league.jardda.backend.service.ClubeJogadorService;
 import league.jardda.backend.service.JogadorService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,12 +22,13 @@ public class JogadorController {
     private final ClubeJogadorService clubeJogadorService;
 
     @GetMapping("/jogadores")
-    public ResponseEntity<List<JogadorDTO>> listJogador(
+    public ResponseEntity<PageResponse<JogadorDTO>> listJogador(
             @RequestParam(required = false) String nome,
             @RequestParam(required = false) String pais,
-            @RequestParam(required = false) Long paisId
+            @RequestParam(required = false) Long paisId,
+            Pageable pageable
     ) {
-        return ResponseEntity.ok(jogadorService.listarJogador(nome, pais, paisId));
+        return ResponseEntity.ok(jogadorService.listarJogador(nome, pais, paisId, pageable));
     }
 
     @GetMapping("/jogadores/{id}")

@@ -1,14 +1,16 @@
 package league.jardda.backend.service;
 
-import league.jardda.backend.dataTransferObj.PartidaDTO;
+import league.jardda.backend.DTO.PageResponse;
+import league.jardda.backend.DTO.PartidaDTO;
 import league.jardda.backend.entity.Partida;
 import league.jardda.backend.exception.NotFoundException;
 import league.jardda.backend.repository.PartidaRepository;
+import league.jardda.backend.utils.PaginacaoUtils;
 import league.jardda.backend.utils.ParameterValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -33,40 +35,35 @@ public class PartidaService {
         );
     }
 
-    public List<PartidaDTO> listarPartida(String clubeCasa, String clubeFora, Integer rodada,
-                                          Long ligaId, String estadio, Long estadioId) {
+    public PageResponse<PartidaDTO> listarPartida(String clubeCasa, String clubeFora, Integer rodada,
+                                                  Long ligaId, String estadio, Long estadioId,
+                                                  Pageable pageable) {
         parameterValidator.validarLiga(ligaId);
         parameterValidator.validarEstadio(estadioId);
 
-        List<PartidaDTO> partidas = partidaRepository
-                .filtrar(clubeCasa, clubeFora, rodada, ligaId, estadio, estadioId, null)
-                .stream()
-                .map(this::toDTO)
-                .toList();
+        Page<Partida> partidas = partidaRepository.filtrar(clubeCasa, clubeFora, rodada, ligaId,
+                estadio, estadioId, null, PaginacaoUtils.semOrdenacao(pageable));
 
-        if (partidas.isEmpty()) {
-            throw new NotFoundException("Nenhuma partida encontrada para os filtros informados.");
+        if (partidas.getTotalElements() == 0) {
+            throw new NotFoundException("Nenhuma partida encontrada para os filtros informados");
         }
-        return partidas;
+        return PageResponse.de(partidas.map(this::toDTO));
     }
 
-    public List<PartidaDTO> listarPartidasDoClube(Long clubeId, Integer rodada,
-                                                  Long ligaId, String estadio, Long estadioId) {
-
+    public PageResponse<PartidaDTO> listarPartidasDoClube(Long clubeId, Integer rodada, Long ligaId,
+                                                          String estadio, Long estadioId,
+                                                          Pageable pageable) {
         parameterValidator.validarClube(clubeId);
         parameterValidator.validarLiga(ligaId);
         parameterValidator.validarEstadio(estadioId);
 
-        List<PartidaDTO> partidas = partidaRepository
-                .filtrar(null, null, rodada, ligaId, estadio, estadioId, clubeId)
-                .stream()
-                .map(this::toDTO)
-                .toList();
+        Page<Partida> partidas = partidaRepository.filtrar(null, null, rodada, ligaId,
+                estadio, estadioId, clubeId, PaginacaoUtils.semOrdenacao(pageable));
 
-        if (partidas.isEmpty()) {
-            throw new NotFoundException("Clube com id " + clubeId + " não possui partidas.");
+        if (partidas.getTotalElements() == 0) {
+            throw new NotFoundException("Clube com id " + clubeId + " não possui partidas");
         }
-        return partidas;
+        return PageResponse.de(partidas.map(this::toDTO));
     }
 
     public PartidaDTO buscarPorId(Long id) {

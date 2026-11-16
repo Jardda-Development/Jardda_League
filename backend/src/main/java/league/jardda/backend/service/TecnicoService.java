@@ -1,14 +1,16 @@
 package league.jardda.backend.service;
 
-import league.jardda.backend.dataTransferObj.TecnicoDTO;
+import league.jardda.backend.DTO.PageResponse;
+import league.jardda.backend.DTO.TecnicoDTO;
 import league.jardda.backend.entity.Tecnico;
 import league.jardda.backend.exception.NotFoundException;
 import league.jardda.backend.repository.TecnicoRepository;
+import league.jardda.backend.utils.PaginacaoUtils;
 import league.jardda.backend.utils.ParameterValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -25,16 +27,16 @@ public class TecnicoService {
         );
     }
 
-    public List<TecnicoDTO> listarTecnico(String nome, String pais, Long paisId) {
+    public PageResponse<TecnicoDTO> listarTecnico(String nome, String pais, Long paisId, Pageable pageable) {
         parameterValidator.validarPais(paisId);
 
-        List<TecnicoDTO> tecnicos = tecnicoRepository.filtrar(nome, pais, paisId)
-                .stream().map(this::toDTO).toList();
+        Page<Tecnico> tecnicos = tecnicoRepository.filtrar(nome, pais, paisId,
+                PaginacaoUtils.semOrdenacao(pageable));
 
-        if (tecnicos.isEmpty()) {
-            throw new NotFoundException("Nenhum técnico encontrado para os filtros informados.");
+        if (tecnicos.getTotalElements() == 0) {
+            throw new NotFoundException("Nenhum técnico encontrado para os filtros informados");
         }
-        return tecnicos;
+        return PageResponse.de(tecnicos.map(this::toDTO));
     }
 
     public TecnicoDTO buscarPorId(Long id) {

@@ -1,14 +1,16 @@
 package league.jardda.backend.service;
 
-import league.jardda.backend.dataTransferObj.JogadorDTO;
+import league.jardda.backend.DTO.JogadorDTO;
+import league.jardda.backend.DTO.PageResponse;
 import league.jardda.backend.entity.Jogador;
 import league.jardda.backend.exception.NotFoundException;
 import league.jardda.backend.repository.JogadorRepository;
+import league.jardda.backend.utils.PaginacaoUtils;
 import league.jardda.backend.utils.ParameterValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -27,16 +29,16 @@ public class JogadorService {
         );
     }
 
-    public List<JogadorDTO> listarJogador(String nome, String pais, Long paisId) {
+    public PageResponse<JogadorDTO> listarJogador(String nome, String pais, Long paisId, Pageable pageable) {
         parameterValidator.validarPais(paisId);
 
-        List<JogadorDTO> jogadores = jogadorRepository.filtrar(nome, pais, paisId)
-                .stream().map(this::toDTO).toList();
+        Page<Jogador> jogadores = jogadorRepository.filtrar(nome, pais, paisId,
+                PaginacaoUtils.semOrdenacao(pageable));
 
-        if (jogadores.isEmpty()) {
-            throw new NotFoundException("Nenhum jogador encontrado para os filtros informados.");
+        if (jogadores.getTotalElements() == 0) {
+            throw new NotFoundException("Nenhum jogador encontrado para os filtros informados");
         }
-        return jogadores;
+        return PageResponse.de(jogadores.map(this::toDTO));
     }
 
     public JogadorDTO buscarPorId(Long id) {

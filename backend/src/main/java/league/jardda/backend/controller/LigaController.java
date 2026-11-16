@@ -1,12 +1,14 @@
 package league.jardda.backend.controller;
 
-import league.jardda.backend.dataTransferObj.ClubeLigaDTO;
-import league.jardda.backend.dataTransferObj.LigaDTO;
-import league.jardda.backend.dataTransferObj.PartidaDTO;
+import league.jardda.backend.DTO.ClubeLigaDTO;
+import league.jardda.backend.DTO.LigaDTO;
+import league.jardda.backend.DTO.PageResponse;
+import league.jardda.backend.DTO.PartidaDTO;
 import league.jardda.backend.service.ClubeLigaService;
 import league.jardda.backend.service.LigaService;
 import league.jardda.backend.service.PartidaService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,15 +39,16 @@ public class LigaController {
     }
 
     @GetMapping("/ligas/{id}/partidas")
-    public ResponseEntity<List<PartidaDTO>> listPartidasDaLiga(
+    public ResponseEntity<PageResponse<PartidaDTO>> listPartidasDaLiga(
             @PathVariable Long id,
             @RequestParam(required = false) String clubeCasa,
             @RequestParam(required = false) String clubeFora,
             @RequestParam(required = false) Integer rodada,
             @RequestParam(required = false) String estadio,
-            @RequestParam(required = false) Long estadioId
+            @RequestParam(required = false) Long estadioId,
+            Pageable pageable
     ) {
-        return ResponseEntity.ok(partidaService.listarPartida(clubeCasa, clubeFora, rodada, id, estadio, estadioId));
+        return ResponseEntity.ok(partidaService.listarPartida(clubeCasa, clubeFora, rodada, id, estadio, estadioId, pageable));
     }
 
     @GetMapping("/ligas/{id}/clubes")

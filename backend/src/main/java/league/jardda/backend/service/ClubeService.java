@@ -1,6 +1,6 @@
 package league.jardda.backend.service;
 
-import league.jardda.backend.dataTransferObj.ClubeDTO;
+import league.jardda.backend.DTO.ClubeDTO;
 import league.jardda.backend.entity.Clube;
 import league.jardda.backend.exception.NotFoundException;
 import league.jardda.backend.repository.ClubeRepository;

@@ -1,6 +1,6 @@
 package league.jardda.backend.service;
 
-import league.jardda.backend.dataTransferObj.EstadioDTO;
+import league.jardda.backend.DTO.EstadioDTO;
 import league.jardda.backend.entity.Estadio;
 import league.jardda.backend.exception.NotFoundException;
 import league.jardda.backend.repository.EstadioRepository;

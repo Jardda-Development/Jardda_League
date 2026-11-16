@@ -1,6 +1,6 @@
 package league.jardda.backend.service;
 
-import league.jardda.backend.dataTransferObj.EstatisticaPartidaDTO;
+import league.jardda.backend.DTO.EstatisticaPartidaDTO;
 import league.jardda.backend.entity.EstatisticaPartida;
 import league.jardda.backend.exception.NotFoundException;
 import league.jardda.backend.repository.EstatisticaPartidaRepository;
