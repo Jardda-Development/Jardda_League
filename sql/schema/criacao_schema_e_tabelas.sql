@@ -18,6 +18,7 @@ CREATE TABLE jardda_league.clube(
 	clube_id SERIAL PRIMARY KEY,
 	nome_clube TEXT NOT NULL UNIQUE,
 	cidade_clube INTEGER NOT NULL,
+	versao BIGINT NOT NULL DEFAULT 0,
 	CONSTRAINT fk_cidade_clube FOREIGN KEY (cidade_clube) REFERENCES jardda_league.cidade(cidade_id)
 );
 
@@ -40,11 +41,12 @@ CREATE TABLE jardda_league.estadio(
 );
 
 CREATE TABLE jardda_league.tecnico(
-  	tecnico_id SERIAL PRIMARY KEY,
-  	nome_tecnico TEXT NOT NULL,
-  	aniversario_tecnico DATE NOT NULL CHECK(aniversario_tecnico >= '1900-01-01' AND aniversario_tecnico <= CURRENT_DATE),
-  	pais_tecnico INTEGER NOT NULL,
-  	CONSTRAINT fk_pais_tecnico FOREIGN KEY (pais_tecnico) REFERENCES jardda_league.pais(pais_id)
+	tecnico_id SERIAL PRIMARY KEY,
+	nome_tecnico TEXT NOT NULL,
+	aniversario_tecnico DATE NOT NULL CHECK(aniversario_tecnico >= '1900-01-01' AND aniversario_tecnico <= CURRENT_DATE),
+	pais_tecnico INTEGER NOT NULL,
+	versao BIGINT NOT NULL DEFAULT 0,
+	CONSTRAINT fk_pais_tecnico FOREIGN KEY (pais_tecnico) REFERENCES jardda_league.pais(pais_id)
 );
 
 CREATE TABLE jardda_league.jogador(
@@ -53,7 +55,8 @@ CREATE TABLE jardda_league.jogador(
 	pais_jogador INTEGER NOT NULL,
 	aniversario_jogador DATE NOT NULL CHECK(aniversario_jogador >= '1900-01-01' AND aniversario_jogador <= CURRENT_DATE),
 	posicao CHAR(3) NOT NULL CHECK(posicao IN ('ZAG', 'GOL', 'ATC', 'MEI', 'LAT', 'VOL')),
-	lesionado BOOLEAN DEFAULT FALSE,
+	lesionado BOOLEAN DEFAULT FALSE NOT NULL,
+	versao BIGINT NOT NULL DEFAULT 0,
 	CONSTRAINT fk_pais_jogador FOREIGN KEY (pais_jogador) REFERENCES jardda_league.pais(pais_id)
 );
 
@@ -63,6 +66,7 @@ CREATE TABLE jardda_league.clube_liga(
 	liga_id INTEGER NOT NULL,
 	periodo_entrada DATE NOT NULL CHECK(periodo_entrada >= '1900-01-01' AND periodo_entrada <= CURRENT_DATE), -- pode mudar
 	periodo_saida DATE CHECK(periodo_saida > periodo_entrada AND periodo_saida <= CURRENT_DATE), -- pode mudar
+	versao BIGINT NOT NULL DEFAULT 0,
 	CONSTRAINT fk_liga_id FOREIGN KEY (liga_id) REFERENCES jardda_league.liga(liga_id),
 	CONSTRAINT fk_clube_id FOREIGN KEY (clube_id) REFERENCES jardda_league.clube(clube_id)
 );
@@ -71,10 +75,14 @@ CREATE TABLE jardda_league.clube_jogador(
 	clube_jogador_id SERIAL PRIMARY KEY,
 	clube_id INTEGER NOT NULL,
 	jogador_id INTEGER NOT NULL,
+	tipo_contrato_jogador VARCHAR(20) NOT NULL CHECK(tipo_contrato_jogador IN('emprestimo', 'definitivo', 'formacao')),
+	clube_dono INTEGER CHECK((tipo_contrato_jogador = 'emprestimo' AND clube_dono <> clube_id AND clube_dono IS NOT NULL) OR (tipo_contrato_jogador <> 'emprestimo' AND clube_dono IS NULL)),
 	inicio_contrato_jogador DATE NOT NULL CHECK(inicio_contrato_jogador >= '1900-01-01' AND inicio_contrato_jogador <= CURRENT_DATE),
-	previsao_contrato_jogador DATE NOT NULL CHECK(previsao_contrato_jogador <= inicio_contrato_jogador + INTERVAL '10 YEARS'),
+	previsao_contrato_jogador DATE NOT NULL CHECK(previsao_contrato_jogador >= inicio_contrato_jogador AND previsao_contrato_jogador <= inicio_contrato_jogador + INTERVAL '10 YEARS'),
 	termino_contrato_jogador DATE CHECK(termino_contrato_jogador > inicio_contrato_jogador AND termino_contrato_jogador <= CURRENT_DATE),
-	valor_salario_jogador NUMERIC(10, 2) NOT NULL, -- valor anual em dólares $
+	valor_salario_jogador NUMERIC(10, 2) NOT NULL CHECK(valor_salario_jogador >= 0), -- valor anual em dólares $
+	versao BIGINT NOT NULL DEFAULT 0,
+	CONSTRAINT fk_clube_dono FOREIGN KEY (clube_dono) REFERENCES jardda_league.clube(clube_id),
 	CONSTRAINT fk_clube_id FOREIGN KEY (clube_id) REFERENCES jardda_league.clube(clube_id),
 	CONSTRAINT fk_jogador_id FOREIGN KEY (jogador_id) REFERENCES jardda_league.jogador(jogador_id)
 );
@@ -83,10 +91,12 @@ CREATE TABLE jardda_league.clube_tecnico(
 	clube_tecnico_id SERIAL PRIMARY KEY,
 	clube_id INTEGER NOT NULL,
 	tecnico_id INTEGER NOT NULL,
+	tipo_contrato_tecnico VARCHAR(20) NOT NULL CHECK(tipo_contrato_tecnico IN('definitivo', 'interino')),
 	inicio_contrato_tecnico DATE NOT NULL CHECK(inicio_contrato_tecnico >= '1900-01-01' AND inicio_contrato_tecnico <= CURRENT_DATE),
-	previsao_contrato_tecnico DATE NOT NULL CHECK(previsao_contrato_tecnico <= inicio_contrato_tecnico + INTERVAL '10 YEARS'),
+	previsao_contrato_tecnico DATE NOT NULL CHECK(previsao_contrato_tecnico >= inicio_contrato_tecnico AND previsao_contrato_tecnico <= inicio_contrato_tecnico + INTERVAL '10 YEARS' ),
 	termino_contrato_tecnico DATE CHECK(termino_contrato_tecnico > inicio_contrato_tecnico AND termino_contrato_tecnico <= CURRENT_DATE),
-	valor_salario_tecnico NUMERIC(8, 2) NOT NULL, -- valor anual em dólares $
+	valor_salario_tecnico NUMERIC(8, 2) NOT NULL CHECK(valor_salario_tecnico >= 0), -- valor anual em dólares $
+	versao BIGINT NOT NULL DEFAULT 0,
 	CONSTRAINT fk_clube_id FOREIGN KEY (clube_id) REFERENCES jardda_league.clube(clube_id),
 	CONSTRAINT fk_tecnico_id FOREIGN KEY (tecnico_id) REFERENCES jardda_league.tecnico(tecnico_id)
 );
@@ -100,6 +110,8 @@ CREATE TABLE jardda_league.partida(
 	data_partida DATE NOT NULL CHECK(data_partida >= '1900-01-01' AND data_partida <= CURRENT_DATE),
 	publico_partida INTEGER NOT NULL CHECK(publico_partida >= 0),
 	rodada_partida INTEGER, -- pode ser null se for amistoso ou tira-teima
+	versao BIGINT NOT NULL DEFAULT 0,
+	UNIQUE(time_1_id, time_2_id, data_partida),
 	CONSTRAINT fk_time_1_id FOREIGN KEY (time_1_id) REFERENCES jardda_league.clube(clube_id),
 	CONSTRAINT fk_time_2_id FOREIGN KEY (time_2_id) REFERENCES jardda_league.clube(clube_id),
 	CONSTRAINT fk_liga_partida FOREIGN KEY (liga_partida) REFERENCES jardda_league.liga(liga_id),
@@ -114,11 +126,21 @@ CREATE TABLE jardda_league.estatistica_partida(
 	time_2_cartoes INTEGER NOT NULL CHECK(time_2_cartoes >= 0),
 	time_1_chutes INTEGER NOT NULL CHECK(time_1_chutes >= 0),
 	time_2_chutes INTEGER NOT NULL CHECK(time_2_chutes >= 0),
+	versao BIGINT NOT NULL DEFAULT 0,
 	CONSTRAINT fk_partida_id FOREIGN KEY (partida_id) REFERENCES jardda_league.partida(partida_id)
 );
 
 CREATE UNIQUE INDEX jogador_contrato_ativo ON jardda_league.clube_jogador(jogador_id)
-WHERE termino_contrato_jogador is null;
+WHERE termino_contrato_jogador IS NULL AND tipo_contrato_jogador <> 'emprestimo';
+
+CREATE UNIQUE INDEX jogador_emprestimo_ativo ON jardda_league.clube_jogador(jogador_id)
+WHERE termino_contrato_jogador IS NULL AND tipo_contrato_jogador =  'emprestimo';
 
 CREATE UNIQUE INDEX tecnico_contrato_ativo ON jardda_league.clube_tecnico(tecnico_id)
-WHERE termino_contrato_tecnico is null;
+WHERE termino_contrato_tecnico IS NULL;
+
+CREATE UNIQUE INDEX clube_tecnico_ativo ON jardda_league.clube_tecnico(clube_id)
+WHERE termino_contrato_tecnico IS NULL;
+
+CREATE UNIQUE INDEX clube_liga_ativo ON jardda_league.clube_liga(clube_id, liga_id)
+WHERE periodo_saida IS NULL;
