@@ -1,0 +1,1016 @@
+{
+  "info": {
+    "name": "Jardda League",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "id",
+      "value": "1"
+    }
+  ],
+  "event": [
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.test('sem erro 5xx', function () {",
+          "    pm.expect(pm.response.code).to.be.below(500);",
+          "});"
+        ]
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "Cidades",
+      "item": [
+        {
+          "name": "GET /cidades",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/cidades",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "cidades"
+              ],
+              "query": [
+                {
+                  "key": "nome",
+                  "value": "a",
+                  "disabled": true
+                },
+                {
+                  "key": "pais",
+                  "value": "Brasil",
+                  "disabled": true
+                },
+                {
+                  "key": "paisId",
+                  "value": "1",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /cidades/{id}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/cidades/{{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "cidades",
+                "{{id}}"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "GET /cidades/{id}/estadios",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/cidades/{{id}}/estadios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "cidades",
+                "{{id}}",
+                "estadios"
+              ],
+              "query": [
+                {
+                  "key": "nome",
+                  "value": "a",
+                  "disabled": true
+                },
+                {
+                  "key": "clube",
+                  "value": "a",
+                  "disabled": true
+                },
+                {
+                  "key": "clubeId",
+                  "value": "1",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /cidades/{id}/clubes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/cidades/{{id}}/clubes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "cidades",
+                "{{id}}",
+                "clubes"
+              ],
+              "query": [
+                {
+                  "key": "nome",
+                  "value": "a",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Clubes",
+      "item": [
+        {
+          "name": "GET /clubes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/clubes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "clubes"
+              ],
+              "query": [
+                {
+                  "key": "nome",
+                  "value": "a",
+                  "disabled": true
+                },
+                {
+                  "key": "pais",
+                  "value": "Brasil",
+                  "disabled": true
+                },
+                {
+                  "key": "cidadeId",
+                  "value": "1",
+                  "disabled": true
+                },
+                {
+                  "key": "paisId",
+                  "value": "1",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /clubes/{id}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/clubes/{{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "clubes",
+                "{{id}}"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "GET /clubes/{id}/estadios",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/clubes/{{id}}/estadios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "clubes",
+                "{{id}}",
+                "estadios"
+              ],
+              "query": [
+                {
+                  "key": "nome",
+                  "value": "a",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /clubes/{id}/partidas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/clubes/{{id}}/partidas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "clubes",
+                "{{id}}",
+                "partidas"
+              ],
+              "query": [
+                {
+                  "key": "rodada",
+                  "value": "1",
+                  "disabled": true
+                },
+                {
+                  "key": "ligaId",
+                  "value": "1",
+                  "disabled": true
+                },
+                {
+                  "key": "estadio",
+                  "value": "a",
+                  "disabled": true
+                },
+                {
+                  "key": "estadioId",
+                  "value": "1",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /clubes/{id}/elenco",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/clubes/{{id}}/elenco",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "clubes",
+                "{{id}}",
+                "elenco"
+              ],
+              "query": [
+                {
+                  "key": "apenasAtivos",
+                  "value": "true",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /clubes/{id}/tecnicos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/clubes/{{id}}/tecnicos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "clubes",
+                "{{id}}",
+                "tecnicos"
+              ],
+              "query": [
+                {
+                  "key": "apenasAtivos",
+                  "value": "true",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /clubes/{id}/ligas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/clubes/{{id}}/ligas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "clubes",
+                "{{id}}",
+                "ligas"
+              ],
+              "query": [
+                {
+                  "key": "apenasAtivos",
+                  "value": "true",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Estadios",
+      "item": [
+        {
+          "name": "GET /estadios",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/estadios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "estadios"
+              ],
+              "query": [
+                {
+                  "key": "nome",
+                  "value": "a",
+                  "disabled": true
+                },
+                {
+                  "key": "clube",
+                  "value": "a",
+                  "disabled": true
+                },
+                {
+                  "key": "cidadeId",
+                  "value": "1",
+                  "disabled": true
+                },
+                {
+                  "key": "clubeId",
+                  "value": "1",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /estadios/{id}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/estadios/{{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "estadios",
+                "{{id}}"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "GET /estadios/{id}/partidas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/estadios/{{id}}/partidas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "estadios",
+                "{{id}}",
+                "partidas"
+              ],
+              "query": [
+                {
+                  "key": "clubeCasa",
+                  "value": "a",
+                  "disabled": true
+                },
+                {
+                  "key": "clubeFora",
+                  "value": "a",
+                  "disabled": true
+                },
+                {
+                  "key": "rodada",
+                  "value": "1",
+                  "disabled": true
+                },
+                {
+                  "key": "ligaId",
+                  "value": "1",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Jogadores",
+      "item": [
+        {
+          "name": "GET /jogadores",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/jogadores",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "jogadores"
+              ],
+              "query": [
+                {
+                  "key": "nome",
+                  "value": "a",
+                  "disabled": true
+                },
+                {
+                  "key": "pais",
+                  "value": "Brasil",
+                  "disabled": true
+                },
+                {
+                  "key": "paisId",
+                  "value": "1",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /jogadores/{id}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/jogadores/{{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "jogadores",
+                "{{id}}"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "GET /jogadores/{id}/contratos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/jogadores/{{id}}/contratos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "jogadores",
+                "{{id}}",
+                "contratos"
+              ],
+              "query": [
+                {
+                  "key": "apenasAtivos",
+                  "value": "true",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /jogadores/{id}/clube-atual",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/jogadores/{{id}}/clube-atual",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "jogadores",
+                "{{id}}",
+                "clube-atual"
+              ],
+              "query": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Ligas",
+      "item": [
+        {
+          "name": "GET /ligas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/ligas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ligas"
+              ],
+              "query": [
+                {
+                  "key": "nome",
+                  "value": "a",
+                  "disabled": true
+                },
+                {
+                  "key": "pais",
+                  "value": "Brasil",
+                  "disabled": true
+                },
+                {
+                  "key": "paisId",
+                  "value": "1",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /ligas/{id}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/ligas/{{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ligas",
+                "{{id}}"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "GET /ligas/{id}/partidas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/ligas/{{id}}/partidas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ligas",
+                "{{id}}",
+                "partidas"
+              ],
+              "query": [
+                {
+                  "key": "clubeCasa",
+                  "value": "a",
+                  "disabled": true
+                },
+                {
+                  "key": "clubeFora",
+                  "value": "a",
+                  "disabled": true
+                },
+                {
+                  "key": "rodada",
+                  "value": "1",
+                  "disabled": true
+                },
+                {
+                  "key": "estadio",
+                  "value": "a",
+                  "disabled": true
+                },
+                {
+                  "key": "estadioId",
+                  "value": "1",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /ligas/{id}/clubes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/ligas/{{id}}/clubes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ligas",
+                "{{id}}",
+                "clubes"
+              ],
+              "query": [
+                {
+                  "key": "apenasAtivos",
+                  "value": "true",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Paises",
+      "item": [
+        {
+          "name": "GET /paises",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/paises",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "paises"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "GET /paises/{id}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/paises/{{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "paises",
+                "{{id}}"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "GET /paises/{id}/cidades",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/paises/{{id}}/cidades",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "paises",
+                "{{id}}",
+                "cidades"
+              ],
+              "query": [
+                {
+                  "key": "nome",
+                  "value": "a",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /paises/{id}/ligas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/paises/{{id}}/ligas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "paises",
+                "{{id}}",
+                "ligas"
+              ],
+              "query": [
+                {
+                  "key": "nome",
+                  "value": "a",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /paises/{id}/clubes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/paises/{{id}}/clubes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "paises",
+                "{{id}}",
+                "clubes"
+              ],
+              "query": [
+                {
+                  "key": "nome",
+                  "value": "a",
+                  "disabled": true
+                },
+                {
+                  "key": "cidadeId",
+                  "value": "1",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /paises/{id}/jogadores",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/paises/{{id}}/jogadores",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "paises",
+                "{{id}}",
+                "jogadores"
+              ],
+              "query": [
+                {
+                  "key": "nome",
+                  "value": "a",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /paises/{id}/tecnicos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/paises/{{id}}/tecnicos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "paises",
+                "{{id}}",
+                "tecnicos"
+              ],
+              "query": [
+                {
+                  "key": "nome",
+                  "value": "a",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Partidas",
+      "item": [
+        {
+          "name": "GET /partidas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/partidas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "partidas"
+              ],
+              "query": [
+                {
+                  "key": "clubeCasa",
+                  "value": "a",
+                  "disabled": true
+                },
+                {
+                  "key": "clubeFora",
+                  "value": "a",
+                  "disabled": true
+                },
+                {
+                  "key": "rodada",
+                  "value": "1",
+                  "disabled": true
+                },
+                {
+                  "key": "ligaId",
+                  "value": "1",
+                  "disabled": true
+                },
+                {
+                  "key": "estadio",
+                  "value": "a",
+                  "disabled": true
+                },
+                {
+                  "key": "estadioId",
+                  "value": "1",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /partidas/{id}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/partidas/{{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "partidas",
+                "{{id}}"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "GET /partidas/{id}/estatisticas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/partidas/{{id}}/estatisticas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "partidas",
+                "{{id}}",
+                "estatisticas"
+              ],
+              "query": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tecnicos",
+      "item": [
+        {
+          "name": "GET /tecnicos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/tecnicos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tecnicos"
+              ],
+              "query": [
+                {
+                  "key": "nome",
+                  "value": "a",
+                  "disabled": true
+                },
+                {
+                  "key": "pais",
+                  "value": "Brasil",
+                  "disabled": true
+                },
+                {
+                  "key": "paisId",
+                  "value": "1",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /tecnicos/{id}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/tecnicos/{{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tecnicos",
+                "{{id}}"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "GET /tecnicos/{id}/contratos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/tecnicos/{{id}}/contratos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tecnicos",
+                "{{id}}",
+                "contratos"
+              ],
+              "query": [
+                {
+                  "key": "apenasAtivos",
+                  "value": "true",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
