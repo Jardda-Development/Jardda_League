@@ -26,6 +26,7 @@ public class ClubeTecnico {
     @JoinColumn(name = "tecnico_id")
     private Tecnico tecnico;
 
+    private String tipoContratoTecnico;
     private LocalDate inicioContratoTecnico;
     private LocalDate previsaoContratoTecnico;
     private LocalDate terminoContratoTecnico;

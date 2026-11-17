@@ -61,6 +61,7 @@ public class ClubeJogadorService {
                 cj.getJogador().getNomeJogador(),
                 cj.getClube().getClubeId(),
                 cj.getClube().getNomeClube(),
+                cj.getTipoContratoJogador(),
                 cj.getInicioContratoJogador(),
                 cj.getPrevisaoContratoJogador(),
                 cj.getTerminoContratoJogador(),

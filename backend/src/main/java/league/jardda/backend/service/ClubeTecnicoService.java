@@ -42,6 +42,7 @@ public class ClubeTecnicoService {
                 ct.getClube().getNomeClube(),
                 ct.getTecnico().getTecnicoId(),
                 ct.getTecnico().getNomeTecnico(),
+                ct.getTipoContratoTecnico(),
                 ct.getInicioContratoTecnico(),
                 ct.getPrevisaoContratoTecnico(),
                 ct.getTerminoContratoTecnico(),

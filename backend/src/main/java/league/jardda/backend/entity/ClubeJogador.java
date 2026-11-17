@@ -26,6 +26,7 @@ public class ClubeJogador {
     @JoinColumn(name = "jogador_id")
     private Jogador jogador;
 
+    private String tipoContratoJogador;
     private LocalDate inicioContratoJogador;
     private LocalDate previsaoContratoJogador;
     private LocalDate terminoContratoJogador;

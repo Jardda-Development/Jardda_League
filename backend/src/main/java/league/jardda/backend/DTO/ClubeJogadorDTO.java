@@ -9,6 +9,7 @@ public record ClubeJogadorDTO(
         String jogadorNome,
         Long clubeId,
         String clubeNome,
+        String tipoContrato,
         LocalDate inicioContrato,
         LocalDate previsaoTermino,
         LocalDate terminoContrato,
