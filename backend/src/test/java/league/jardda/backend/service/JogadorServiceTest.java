@@ -37,7 +37,12 @@ public class JogadorServiceTest {
     private final Pageable pageable = PageRequest.of(0, 10);
 
     private Jogador jogadorDeTeste() {
-        Pais pais = Pais.builder().paisId(1L).nomePais("Brasil").sigla("BRA").build();
+        Pais pais = Pais.builder()
+                .paisId(1L)
+                .nomePais("Brasil")
+                .sigla("BRA")
+                .build();
+
         return Jogador.builder()
                 .jogadorId(1L)
                 .nomeJogador("Ronaldinho Gaúcho")
@@ -51,23 +56,7 @@ public class JogadorServiceTest {
 
     @Test
     void retornaDtoQuandoJogadorExiste() {
-        Pais pais = Pais.builder()
-                .paisId(1L)
-                .nomePais("Brasil")
-                .sigla("BRA")
-                .build();
-
-
-        Jogador jogador = Jogador.builder()
-                .jogadorId(1L)
-                .nomeJogador("Ronaldinho Gaúcho")
-                .paisJogador(pais)
-                .aniversarioJogador(LocalDate.of(1980, 3, 21))
-                .posicao("MEI")
-                .lesionado(false)
-                .build();
-
-        when(jogadorRepository.findById(1L)).thenReturn(Optional.of(jogador));
+        when(jogadorRepository.findById(1L)).thenReturn(Optional.of(jogadorDeTeste()));
 
         JogadorDTO dto = jogadorService.buscarPorId(1L);
 
@@ -109,5 +98,14 @@ public class JogadorServiceTest {
                 .isInstanceOf(NotFoundException.class);
 
         verifyNoInteractions(jogadorRepository);
+    }
+
+    @Test
+    void buscarPorIdLancaNotFoundQuandoJogadorNaoExiste() {
+        when(jogadorRepository.findById(99L)).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> jogadorService.buscarPorId(99L))
+                .isInstanceOf(NotFoundException.class)
+                .hasMessageContaining("99");
     }
 }
