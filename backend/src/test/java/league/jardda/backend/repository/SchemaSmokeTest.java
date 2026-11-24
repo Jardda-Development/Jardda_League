@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class SchemaSmokeTest extends RepositoryTestBase {
-
     @Autowired
     private PaisRepository paisRepository;
 

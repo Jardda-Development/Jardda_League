@@ -2,28 +2,13 @@ package league.jardda.backend.repository;
 
 import league.jardda.backend.entity.Cidade;
 import league.jardda.backend.entity.Pais;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CidadeRepositoryTest extends RepositoryTestBase {
-    @Autowired
-    private CidadeRepository cidadeRepository;
-    @Autowired
-    private PaisRepository paisRepository;
-
-    private Pais salvarPais(String nome, String sigla) {
-        return paisRepository.save(Pais.builder().nomePais(nome).sigla(sigla).build());
-    }
-
-    private Cidade salvarCidade(String nome, Pais pais) {
-        return cidadeRepository.save(Cidade.builder().nomeCidade(nome).pais(pais).build());
-    }
-
     @Test
     void verificaSeItensSaoSalvosEOrdenadosDeFormaAlfabetica() {
         Pais brasil = salvarPais("Brasil", "BRA");
