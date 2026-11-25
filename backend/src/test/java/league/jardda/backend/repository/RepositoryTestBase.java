@@ -51,6 +51,9 @@ abstract class RepositoryTestBase {
     @Autowired
     protected ClubeLigaRepository clubeLigaRepository;
 
+    @Autowired
+    protected PartidaRepository partidaRepository;
+
     protected Pais salvarPais(String nome, String sigla) {
         return paisRepository.save(Pais.builder()
                 .nomePais(nome)
@@ -143,6 +146,19 @@ abstract class RepositoryTestBase {
                 .liga(liga)
                 .periodoEntrada(entrada)
                 .periodoSaida(saida)
+                .build());
+    }
+
+    protected Partida salvarPartida(Clube casa, Clube fora, Liga liga, Estadio estadio,
+                                    Integer rodada, LocalDate data) {
+        return partidaRepository.save(Partida.builder()
+                .clube1(casa)
+                .clube2(fora)
+                .ligaPartida(liga)
+                .estadioPartida(estadio)
+                .rodadaPartida(rodada)
+                .dataPartida(data)
+                .publicoPartida(1000)
                 .build());
     }
 }

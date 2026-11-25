@@ -62,7 +62,7 @@ class TecnicoRepositoryTest extends RepositoryTestBase {
         salvarTecnico("Camara", guine);
         salvarTecnico("Embalo", bissau);
 
-        Page<Tecnico> pagina = tecnicoRepository.filtrar(null, "guine", null, PageRequest.of(0, 10));
+        Page<Tecnico> pagina = tecnicoRepository.filtrar(null, "guine", null, PageRequest.of(0, 2));
 
         assertThat(pagina.getContent()).extracting(Tecnico::getNomeTecnico)
                 .containsExactly("Camara", "Sylla");
@@ -77,7 +77,7 @@ class TecnicoRepositoryTest extends RepositoryTestBase {
         salvarTecnico("Scaloni", argentina);
         salvarTecnico("Bielsa", argentina);
 
-        Page<Tecnico> pagina = tecnicoRepository.filtrar(null, null, argentina.getPaisId(), PageRequest.of(0, 10));
+        Page<Tecnico> pagina = tecnicoRepository.filtrar(null, null, argentina.getPaisId(), PageRequest.of(0, 2));
 
         assertThat(pagina.getContent()).extracting(Tecnico::getNomeTecnico)
                 .containsExactly("Bielsa", "Scaloni");
@@ -92,7 +92,7 @@ class TecnicoRepositoryTest extends RepositoryTestBase {
         salvarTecnico("Tite", brasil);
         salvarTecnico("Mancini", argentina);
 
-        Page<Tecnico> pagina = tecnicoRepository.filtrar("ma", null, brasil.getPaisId(), PageRequest.of(0, 10));
+        Page<Tecnico> pagina = tecnicoRepository.filtrar("ma", null, brasil.getPaisId(), PageRequest.of(0, 1));
 
         assertThat(pagina.getContent()).extracting(Tecnico::getNomeTecnico)
                 .containsExactly("Mano");
