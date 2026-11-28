@@ -1,12 +1,20 @@
 package league.jardda.backend.repository;
 
-import league.jardda.backend.entity.*;
+import league.jardda.backend.entity.Cidade;
+import league.jardda.backend.entity.Clube;
+import league.jardda.backend.entity.ClubeJogador;
+import league.jardda.backend.entity.ClubeLiga;
+import league.jardda.backend.entity.ClubeTecnico;
+import league.jardda.backend.entity.Estadio;
+import league.jardda.backend.entity.Jogador;
+import league.jardda.backend.entity.Liga;
+import league.jardda.backend.entity.Pais;
+import league.jardda.backend.entity.Partida;
+import league.jardda.backend.entity.Tecnico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.postgresql.PostgreSQLContainer;
 
 import java.math.BigDecimal;
@@ -14,12 +22,14 @@ import java.time.LocalDate;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Testcontainers
 abstract class RepositoryTestBase {
-    @Container
     @ServiceConnection
-    static PostgreSQLContainer postgres = new PostgreSQLContainer("postgres:18")
+    static final PostgreSQLContainer postgres = new PostgreSQLContainer("postgres:18")
             .withInitScript("criacao_schema_e_tabelas.sql");
+
+    static {
+        postgres.start();
+    }
 
     @Autowired
     protected PaisRepository paisRepository;

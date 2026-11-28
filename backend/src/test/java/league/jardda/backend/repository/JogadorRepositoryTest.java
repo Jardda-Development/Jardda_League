@@ -62,7 +62,7 @@ class JogadorRepositoryTest extends RepositoryTestBase {
         salvarJogador("Camara", guine);
         salvarJogador("Embalo", bissau);
 
-        Page<Jogador> pagina = jogadorRepository.filtrar(null, "guine", null, PageRequest.of(0, 10));
+        Page<Jogador> pagina = jogadorRepository.filtrar(null, "guine", null, PageRequest.of(0, 2));
 
         assertThat(pagina.getContent()).extracting(Jogador::getNomeJogador)
                 .containsExactly("Camara", "Sylla");
@@ -77,7 +77,7 @@ class JogadorRepositoryTest extends RepositoryTestBase {
         salvarJogador("Messi", argentina);
         salvarJogador("Dibu", argentina);
 
-        Page<Jogador> pagina = jogadorRepository.filtrar(null, null, argentina.getPaisId(), PageRequest.of(0, 10));
+        Page<Jogador> pagina = jogadorRepository.filtrar(null, null, argentina.getPaisId(), PageRequest.of(0, 2));
 
         assertThat(pagina.getContent()).extracting(Jogador::getNomeJogador)
                 .containsExactly("Dibu", "Messi");
@@ -92,7 +92,7 @@ class JogadorRepositoryTest extends RepositoryTestBase {
         salvarJogador("Cafu", brasil);
         salvarJogador("Martinez", argentina);
 
-        Page<Jogador> pagina = jogadorRepository.filtrar("mar", null, brasil.getPaisId(), PageRequest.of(0, 10));
+        Page<Jogador> pagina = jogadorRepository.filtrar("mar", null, brasil.getPaisId(), PageRequest.of(0, 1));
 
         assertThat(pagina.getContent()).extracting(Jogador::getNomeJogador)
                 .containsExactly("Marcelo");
